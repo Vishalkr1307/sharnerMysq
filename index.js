@@ -8,6 +8,7 @@ const Product = require("./route/product");
 const Contact = require("./route/contact");
 const server = http.createServer(app);
 const db = require("./config/db");
+const db1=require("./config/db1")
 var port = 5500;
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "Public")));
@@ -15,9 +16,13 @@ app.use("/", Home);
 app.use("/product", Product);
 app.use("/contact", Contact);
 // console.log(db().then((res)=>console.log(res)))
+db1.sync().then((res)=>{
+  server.listen(port, async () => {
+ 
 
-server.listen(port, async () => {
-  // await db();
+    console.log(`Starting on port ${port}`);
+  });
+  
 
-  console.log(`Starting on port ${port}`);
-});
+}).catch((err)=>console.log(err))
+
